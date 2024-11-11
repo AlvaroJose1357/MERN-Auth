@@ -1,6 +1,8 @@
 import User from "../models/modelUser.js";
 import bcrypt from "bcryptjs";
 import { createAcessToken } from "../libs/jwt.js";
+import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../config/entorno.js";
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -102,10 +104,37 @@ const profile = async (req, res) => {
   }
 };
 
+const verifyToken = async (req, res) => {
+  const { token } = req.cookies;
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  jwt.verify(token, JWT_SECRET, async (err, user) => {
+    if (err) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const userFound = await User.findById(user.id);
+    if (!userFound) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    res
+      .status(200)
+      .json({
+        message: "Token valido",
+        user: {
+          id: userFound._id,
+          username: userFound.username,
+          email: userFound.email,
+        },
+      });
+  });
+};
+
 const controllerAuth = {
   register,
   login,
   logout,
+  verifyToken,
   profile,
 };
 

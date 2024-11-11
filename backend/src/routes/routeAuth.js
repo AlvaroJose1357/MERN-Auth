@@ -17,6 +17,7 @@ router.post(
   controllerAuth.login
 );
 router.post("/logout", controllerAuth.logout);
+router.get("/verifyToken", controllerAuth.verifyToken);
 router.get("/profile", authRequired, controllerAuth.profile);
 
 export default router;

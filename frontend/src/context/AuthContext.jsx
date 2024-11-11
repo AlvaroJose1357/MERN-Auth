@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from "react";
-import { registerRequest, loginRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
@@ -9,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
   const [error, setErrors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const signup = async (data) => {
     try {
@@ -53,8 +55,40 @@ export const AuthProvider = ({ children }) => {
     }
   }, [error]);
 
+  useEffect(() => {
+    async function checklogin() {
+      const cookies = Cookies.get();
+      if (!cookies.token) {
+        setIsAuth(false);
+        setLoading(false);
+        setUser(null);
+        return;
+      }
+      try {
+        const res = await verifyTokenRequest(cookies.token);
+        console.log(res);
+        if (!res.data) {
+          setIsAuth(false);
+          setLoading(false);
+          return;
+        }
+
+        setUser(res.data);
+        setIsAuth(true);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsAuth(false);
+        setUser(null);
+        setLoading(false);
+      }
+    }
+    checklogin();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, signup, signin, isAuth, error }}>
+    <AuthContext.Provider
+      value={{ user, signup, signin, isAuth, error, loading }}>
       {children}
     </AuthContext.Provider>
   );

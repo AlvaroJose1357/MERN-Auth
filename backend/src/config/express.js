@@ -7,13 +7,14 @@ import cors from "cors";
 
 const app = express();
 // si deseo que cualquier origen pueda acceder a mi API, debo configurar cors de la siguiente manera
-app.use(cors());
+// app.use(cors());
 // si deseo que solo un origen específico pueda acceder a mi API, debo configurar cors de la siguiente manera
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173",
-//   })
-// );
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 // morgan es un middleware que nos permite ver en consola las peticiones que llegan al servidor en tiempo real
 // morgan("dev") es una configuración de morgan que nos permite ver las peticiones en consola de una forma más legible
 app.use(morgan("dev"));

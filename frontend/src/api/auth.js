@@ -1,11 +1,17 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:3000/api/autenticacion";
+import axios from "./axios";
 
 export const registerRequest = (user) => {
-  return axios.post(`${API_URL}/register`, user);
+  return axios.post(`/autenticacion/register`, user);
 };
 
 export const loginRequest = (user) => {
-  return axios.post(`${API_URL}/login`, user);
+  return axios.post(`/autenticacion/login`, user);
+};
+
+export const logoutRequest = () => {
+  return axios.post(`/autenticacion/logout`);
+};
+
+export const verifyTokenRequest = () => {
+  return axios.get(`/autenticacion/verifyToken`);
 };
