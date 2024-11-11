@@ -13,7 +13,6 @@ export const TaskContext = createContext();
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [error, setErrors] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const getTasks = async () => {
     try {
@@ -25,13 +24,12 @@ export const TaskProvider = ({ children }) => {
       }
       setErrors([error.response.data.message]);
     }
-    setLoading(false);
   };
 
   const createTask = async (data) => {
     try {
       const res = await createTaskRequest(data);
-      setTasks([...tasks, res.data]);
+      console.log(res);
     } catch (error) {
       if (Array.isArray(error.response.data)) {
         setErrors(error.response.data);
@@ -43,13 +41,14 @@ export const TaskProvider = ({ children }) => {
   const updateTask = async (data) => {
     try {
       const res = await updateTaskRequest(data);
-      const newTasks = tasks.map((task) => {
-        if (task._id === res.data._id) {
-          return res.data;
-        }
-        return task;
-      });
-      setTasks(newTasks);
+      // const newTasks = tasks.map((task) => {
+      //   if (task._id === res.data._id) {
+      //     return res.data;
+      //   }
+      //   return task;
+      // });
+      // setTasks(newTasks);
+      console.log(res);
     } catch (error) {
       if (Array.isArray(error.response.data)) {
         setErrors(error.response.data);
@@ -60,9 +59,12 @@ export const TaskProvider = ({ children }) => {
 
   const deleteTask = async (id) => {
     try {
-      await deleteTaskRequest(id);
-      const taskDelete = tasks.filter((task) => task._id !== id);
-      setTasks(taskDelete);
+      const res = await deleteTaskRequest(id);
+      if (res.status === 204) {
+        const taskDelete = tasks.filter((task) => task._id !== id);
+        setTasks(taskDelete);
+      }
+      console.log(res);
     } catch (error) {
       if (Array.isArray(error.response.data)) {
         setErrors(error.response.data);
@@ -89,7 +91,6 @@ export const TaskProvider = ({ children }) => {
       value={{
         tasks,
         error,
-        loading,
         getTasks,
         createTask,
         updateTask,
