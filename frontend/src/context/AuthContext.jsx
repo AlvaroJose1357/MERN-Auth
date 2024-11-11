@@ -1,7 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
+import {
+  registerRequest,
+  loginRequest,
+  verifyTokenRequest,
+  logoutRequest,
+} from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -43,6 +48,17 @@ export const AuthProvider = ({ children }) => {
         setErrors(error.response.data);
       }
       setErrors([error.response.data.message]);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await logoutRequest();
+      Cookies.remove("token");
+      setUser(null);
+      setIsAuth(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -88,7 +104,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, signup, signin, isAuth, error, loading }}>
+      value={{ user, signup, signin, logout, isAuth, error, loading }}>
       {children}
     </AuthContext.Provider>
   );

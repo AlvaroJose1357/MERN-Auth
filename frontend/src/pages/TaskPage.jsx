@@ -5,7 +5,7 @@ import { useTask } from "../hooks/useTask";
 export default function TaskPage() {
   const { tasks, getTasks } = useTask();
 
-  console.log(tasks);
+  // console.log(tasks);
 
   useEffect(() => {
     getTasks();
