@@ -79,7 +79,7 @@ export default function LoginPage() {
           <button
             type="submit"
             className="w-full cursor-pointer bg-zinc-500 p-3 font-bold uppercase text-white transition-colors hover:bg-zinc-700">
-            Register
+            Login
           </button>
           <p className="flex gap-x-2 justify-between mt-3">
             No tienes cuenta?{" "}
