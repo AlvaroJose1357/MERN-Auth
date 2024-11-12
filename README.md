@@ -2,7 +2,7 @@
 
 ## Descripcion
 
-Proyecto sencillo el cual trata de un gestor de areas el cual contiene de un login para que cada usuario tenga sus tareas en especifico, el cual se manejan el token de autenticacion cookies, cada que va a una ruta protegida verifica que cada token sea valido, las tareas se guardan en una BD mongoBD
+Proyecto sencillo el cual trata de un gestor de tareas el cual contiene de un login para que cada usuario tenga sus tareas en especifico, el cual se manejan el token de autenticacion cookies, cada que va a una ruta protegida verifica que cada token sea valido, las tareas se guardan en una BD mongoBD
 
 ## flujo de trabajo
 
