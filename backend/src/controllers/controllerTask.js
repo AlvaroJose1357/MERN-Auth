@@ -19,7 +19,7 @@ const getTaskbyId = async (req, res) => {
     }
     res.status(200).json(task);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Task not found" });
   }
 };
 

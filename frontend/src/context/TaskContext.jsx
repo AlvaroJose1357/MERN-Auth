@@ -4,6 +4,7 @@ import { createContext, useEffect, useState } from "react";
 import {
   createTaskRequest,
   deleteTaskRequest,
+  getTaskRequest,
   getTasksRequest,
   updateTaskRequest,
 } from "../api/task";
@@ -38,9 +39,21 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  const updateTask = async (data) => {
+  const getTask = async (id) => {
     try {
-      const res = await updateTaskRequest(data);
+      const res = await getTaskRequest(id);
+      return res.data;
+    } catch (error) {
+      if (Array.isArray(error.response.data)) {
+        setErrors(error.response.data);
+      }
+      setErrors([error.response.data.message]);
+    }
+  };
+
+  const updateTask = async (id, data) => {
+    try {
+      await updateTaskRequest(id, data);
       // const newTasks = tasks.map((task) => {
       //   if (task._id === res.data._id) {
       //     return res.data;
@@ -48,7 +61,7 @@ export const TaskProvider = ({ children }) => {
       //   return task;
       // });
       // setTasks(newTasks);
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       if (Array.isArray(error.response.data)) {
         setErrors(error.response.data);
@@ -92,6 +105,7 @@ export const TaskProvider = ({ children }) => {
         tasks,
         error,
         getTasks,
+        getTask,
         createTask,
         updateTask,
         deleteTask,
