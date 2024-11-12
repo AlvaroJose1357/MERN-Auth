@@ -25,7 +25,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="bg-zinc-800 max-w-md p-10 rounded-md shadow-lg">
         <h1 className="text-2xl font-bold mb-5 text-center">Register</h1>
         {error.map((error, index) => (

@@ -25,7 +25,7 @@ export default function LoginPage() {
     signin(data);
   };
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="bg-zinc-800 max-w-md p-10 rounded-md shadow-lg">
         <h1 className="text-2xl font-bold mb-5 text-center">Login Page</h1>
         {error.map((error, index) => (

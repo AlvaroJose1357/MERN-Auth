@@ -8,7 +8,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-zinc-700 my-3 flex justify-between py-5 px-10">
-      <Link to="/">
+      <Link to={isAuth ? "/tasks" : "/"}>
         <h1 className="text-2xl font-bold">Tasks Manager</h1>
       </Link>
 
